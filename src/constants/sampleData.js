@@ -1,0 +1,230 @@
+const getRecentDate = (daysAgo = 0) => {
+  const d = new Date();
+  d.setDate(d.getDate() - daysAgo);
+  return d.toISOString().split('T')[0];
+};
+
+export const INITIAL_MEDICINES = [
+  {
+    id: 'med-001',
+    name: 'Amoxicillin 500mg',
+    dosage: '1 Capsule',
+    type: 'Capsule',
+    instructions: 'After Food',
+    frequency: 'Daily',
+    times: ['08:00', '20:00'],
+    startDate: getRecentDate(3),
+    endDate: getRecentDate(-4),
+    category: 'Antibiotic',
+    imageUri: null,
+    notes: 'Complete the full prescribed 7-day course. Take with plenty of water.',
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: 'med-002',
+    name: 'Vitamin D3 1000 IU',
+    dosage: '1 Tablet',
+    type: 'Tablet',
+    instructions: 'With Morning Meal',
+    frequency: 'Daily',
+    times: ['09:00'],
+    startDate: getRecentDate(14),
+    endDate: getRecentDate(-16),
+    category: 'Supplement',
+    imageUri: null,
+    notes: 'Best taken with a meal containing healthy fats for optimal absorption.',
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: 'med-003',
+    name: 'Paracetamol 650mg',
+    dosage: '1 Tablet',
+    type: 'Tablet',
+    instructions: 'After Food',
+    frequency: 'As Needed',
+    times: ['14:00'],
+    startDate: getRecentDate(2),
+    endDate: getRecentDate(-3),
+    category: 'Analgesic',
+    imageUri: null,
+    notes: 'Take when fever or joint pain recurs. Minimum 6 hours gap between doses.',
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: 'med-004',
+    name: 'Metformin 500mg',
+    dosage: '1 Tablet',
+    type: 'Tablet',
+    instructions: 'With Dinner',
+    frequency: 'Daily',
+    times: ['20:30'],
+    startDate: getRecentDate(20),
+    endDate: getRecentDate(-40),
+    category: 'Maintenance',
+    imageUri: null,
+    notes: 'Supports glycemic balance. Take regularly at dinner time.',
+    createdAt: new Date().toISOString(),
+  }
+];
+
+export const INITIAL_DOSE_LOGS = [
+  // Today's doses
+  {
+    id: 'log-001',
+    medicineId: 'med-001',
+    medicineName: 'Amoxicillin 500mg',
+    scheduledTime: '08:00',
+    date: getRecentDate(0),
+    status: 'taken',
+    loggedAt: `${getRecentDate(0)}T08:05:00.000Z`,
+  },
+  {
+    id: 'log-002',
+    medicineId: 'med-002',
+    medicineName: 'Vitamin D3 1000 IU',
+    scheduledTime: '09:00',
+    date: getRecentDate(0),
+    status: 'taken',
+    loggedAt: `${getRecentDate(0)}T09:12:00.000Z`,
+  },
+  // Yesterday's logs
+  {
+    id: 'log-003',
+    medicineId: 'med-001',
+    medicineName: 'Amoxicillin 500mg',
+    scheduledTime: '08:00',
+    date: getRecentDate(1),
+    status: 'taken',
+    loggedAt: `${getRecentDate(1)}T08:02:00.000Z`,
+  },
+  {
+    id: 'log-004',
+    medicineId: 'med-001',
+    medicineName: 'Amoxicillin 500mg',
+    scheduledTime: '20:00',
+    date: getRecentDate(1),
+    status: 'taken',
+    loggedAt: `${getRecentDate(1)}T20:10:00.000Z`,
+  },
+  {
+    id: 'log-005',
+    medicineId: 'med-002',
+    medicineName: 'Vitamin D3 1000 IU',
+    scheduledTime: '09:00',
+    date: getRecentDate(1),
+    status: 'taken',
+    loggedAt: `${getRecentDate(1)}T09:05:00.000Z`,
+  },
+  // 2 days ago
+  {
+    id: 'log-006',
+    medicineId: 'med-001',
+    medicineName: 'Amoxicillin 500mg',
+    scheduledTime: '08:00',
+    date: getRecentDate(2),
+    status: 'taken',
+    loggedAt: `${getRecentDate(2)}T08:15:00.000Z`,
+  },
+  {
+    id: 'log-007',
+    medicineId: 'med-001',
+    medicineName: 'Amoxicillin 500mg',
+    scheduledTime: '20:00',
+    date: getRecentDate(2),
+    status: 'skipped',
+    loggedAt: `${getRecentDate(2)}T21:00:00.000Z`,
+  },
+  // 3 days ago
+  {
+    id: 'log-008',
+    medicineId: 'med-002',
+    medicineName: 'Vitamin D3 1000 IU',
+    scheduledTime: '09:00',
+    date: getRecentDate(3),
+    status: 'taken',
+    loggedAt: `${getRecentDate(3)}T09:20:00.000Z`,
+  },
+  // 4 days ago
+  {
+    id: 'log-009',
+    medicineId: 'med-002',
+    medicineName: 'Vitamin D3 1000 IU',
+    scheduledTime: '09:00',
+    date: getRecentDate(4),
+    status: 'taken',
+    loggedAt: `${getRecentDate(4)}T09:01:00.000Z`,
+  },
+  // 5 days ago
+  {
+    id: 'log-010',
+    medicineId: 'med-002',
+    medicineName: 'Vitamin D3 1000 IU',
+    scheduledTime: '09:00',
+    date: getRecentDate(5),
+    status: 'taken',
+    loggedAt: `${getRecentDate(5)}T09:10:00.000Z`,
+  },
+  // 6 days ago
+  {
+    id: 'log-011',
+    medicineId: 'med-002',
+    medicineName: 'Vitamin D3 1000 IU',
+    scheduledTime: '09:00',
+    date: getRecentDate(6),
+    status: 'skipped',
+    loggedAt: `${getRecentDate(6)}T12:00:00.000Z`,
+  }
+];
+
+export const INITIAL_DIARY_ENTRIES = [
+  {
+    id: 'diary-001',
+    date: getRecentDate(0),
+    time: '08:30 AM',
+    symptoms: 'Mild morning fatigue, throat clear',
+    temperature: '98.4 °F',
+    bloodPressure: '120/80',
+    pulse: '72 bpm',
+    notes: 'Woke up feeling refreshed. Took morning antibiotic and vitamin with a bowl of oatmeal.',
+    location: 'Home (Bengaluru, IN)',
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: 'diary-002',
+    date: getRecentDate(1),
+    time: '07:45 PM',
+    symptoms: 'Slight headache after prolonged screen time',
+    temperature: '98.6 °F',
+    bloodPressure: '118/78',
+    pulse: '75 bpm',
+    notes: 'Drank 2 glasses of water and rested eyes for 30 minutes. Headache subsided without additional painkiller.',
+    location: 'Campus Library',
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: 'diary-003',
+    date: getRecentDate(2),
+    time: '09:15 AM',
+    symptoms: 'Feeling energized, good appetite',
+    temperature: '98.2 °F',
+    bloodPressure: '122/82',
+    pulse: '70 bpm',
+    notes: 'Completed 20-minute morning walk. Taking hydration seriously.',
+    location: 'Home',
+    createdAt: new Date().toISOString(),
+  }
+];
+
+export const INITIAL_USER_PROFILE = {
+  name: 'Alex Morgan',
+  age: '21',
+  gender: 'Female',
+  bloodGroup: 'B+',
+  emergencyContact: '+91 98765 43210',
+  doctorName: 'Dr. Sarah Verma, MD',
+  doctorContact: '+91 91234 56789',
+  notificationsEnabled: true,
+  soundEnabled: true,
+  locationTrackingDemo: true,
+  darkMode: false,
+};

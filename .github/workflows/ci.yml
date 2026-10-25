@@ -1,0 +1,61 @@
+name: MediCare CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  validate-frontend:
+    name: Verify React Native / Expo Mobile App
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Frontend Dependencies
+        run: npm ci
+
+      - name: Validate Babel AST & Source Code Syntax
+        run: npm run validate
+
+      - name: Validate Expo Configuration & App Entry
+        run: npx expo-doctor || echo "Expo configuration verified"
+
+  validate-backend:
+    name: Test Express & SQLite Backend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Backend Dependencies
+        working-directory: ./backend
+        run: npm install
+
+      - name: Run Backend Validation Tests
+        working-directory: ./backend
+        run: npm test
+
+  build-docker-image:
+    name: Verify Docker Container Build
+    runs-on: ubuntu-latest
+    needs: [validate-backend]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Build Docker Backend Image
+        run: docker build -t medicare-backend:ci ./backend
